@@ -77,6 +77,18 @@ module.exports = {
   },
 
   deleteOneBooking: async (bookingUuid) => {
+    const booking = await dynamoDb
+      .get({
+        TableName: TABLE_NAME,
+        Key: {
+          uuid: bookingUuid,
+        },
+      })
+      .promise();
+
+    if (booking.Item === undefined) {
+      throw new Error("Booking cannot be found");
+    }
     await dynamoDb
       .delete({
         TableName: TABLE_NAME,

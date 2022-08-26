@@ -5,7 +5,6 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const TABLE_NAME = process.env.BOOKINGS_TABLE_NAME;
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-import UserFriendlyMessages from "./consts/UserFriendlyMessages";
 
 module.exports = {
   getAll: async () => {
@@ -13,7 +12,7 @@ module.exports = {
       .scan({ TableName: TABLE_NAME })
       .promise();
     return {
-      message: UserFriendlyMessages.success.getAllBookings,
+      message: "Successfully retrieved Bookings.",
       data: allBookings.Items,
     };
   },
@@ -28,7 +27,7 @@ module.exports = {
       })
       .promise();
     return {
-      message: UserFriendlyMessages.success.getOneBooking,
+      message: "Successfully retrieved Booking.",
       data: booking,
     };
   },
@@ -41,7 +40,7 @@ module.exports = {
       (booking) => booking.userId === userId
     );
     return {
-      message: UserFriendlyMessages.success.selfBookings,
+      message: "Successfully retrieved self Bookings",
       data: selfBookings,
     };
   },
@@ -69,7 +68,7 @@ module.exports = {
           },
         })
         .promise();
-      return { message: UserFriendlyMessages.success.createBooking };
+      return { message: "Successfully created Booking." };
     }
   },
 
@@ -82,6 +81,6 @@ module.exports = {
         },
       })
       .promise();
-    return { message: UserFriendlyMessages.success.deleteOneBooking };
+    return { message: "Successfully deleted Booking." };
   },
 };

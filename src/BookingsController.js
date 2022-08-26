@@ -26,9 +26,13 @@ module.exports = {
         },
       })
       .promise();
+
+    if (booking.Item === undefined) {
+      throw new Error("Booking cannot be found");
+    }
     return {
       message: "Successfully retrieved Booking.",
-      data: booking,
+      data: booking.Item,
     };
   },
 

@@ -25,7 +25,13 @@ const BookingsRouter = async (event) => {
     const userId = parseInt(requestJSON.userId);
     const date = requestJSON.date;
     const timeslot = requestJSON.timeslot;
-    body = await BookingsController.createBooking(userId, date, timeslot);
+    const supervisor = requestJSON.supervisor;
+    body = await BookingsController.createBooking(
+      userId,
+      date,
+      timeslot,
+      supervisor
+    );
   }
 
   // Delete 1

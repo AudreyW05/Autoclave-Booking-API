@@ -39,6 +39,11 @@ const BookingsRouter = async (event) => {
     body = await BookingsController.deleteOneBooking(event.pathParameters.uuid);
   }
 
+  if (event.routeKey === "POST /bookings/sendMail") {
+    const requestJSON = JSON.parse(event.body);
+    body = await BookingsController.sendMail(requestJSON);
+  }
+
   return body;
 };
 

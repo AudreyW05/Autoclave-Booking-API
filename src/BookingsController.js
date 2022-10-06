@@ -5,6 +5,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const TABLE_NAME = process.env.BOOKINGS_TABLE_NAME;
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
+const sgMail = require("@sendgrid/mail");
 
 module.exports = {
   getAll: async () => {
@@ -98,6 +99,24 @@ module.exports = {
         },
       })
       .promise();
-    return { message: "Successfully deleted Booking." };
+    return { message: "Successfully Deleted Booking." };
+  },
+
+  sendMail: async (msg) => {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    try {
+      await sgMail.send({
+        to: msg.to,
+        from: msg.from,
+        subject: msg.subject,
+        html: msg.html,
+      });
+    } catch (e) {
+      if (e.message === "Forbidden" || e.message === "Unauthorized") {
+        throw new Error(e.message);
+      }
+      console.log(e);
+    }
+    return { message: "Successfully Sent Email." };
   },
 };

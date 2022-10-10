@@ -26,11 +26,13 @@ const BookingsRouter = async (event) => {
     const date = requestJSON.date;
     const timeslot = requestJSON.timeslot;
     const supervisor = requestJSON.supervisor;
+    const reasoning = requestJSON.reasoning;
     body = await BookingsController.createBooking(
       userId,
       date,
       timeslot,
-      supervisor
+      supervisor,
+      reasoning
     );
   }
 

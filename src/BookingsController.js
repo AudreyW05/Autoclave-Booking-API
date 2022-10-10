@@ -50,7 +50,7 @@ module.exports = {
     };
   },
 
-  createBooking: async (userId, date, timeslot, supervisor) => {
+  createBooking: async (userId, date, timeslot, supervisor, reasoning) => {
     const allBookings = await dynamoDb
       .scan({ TableName: TABLE_NAME })
       .promise();
@@ -71,6 +71,7 @@ module.exports = {
             date: date,
             timeslot: timeslot,
             supervisor: supervisor,
+            reasoning: reasoning,
           },
         })
         .promise();
